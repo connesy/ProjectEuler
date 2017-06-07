@@ -11,7 +11,7 @@ long Number = 600851475143;
 int main(int argc, char const* argv[]) {
 	
 	ivec Primes;
-	Primes.load("../HelpPrograms/PrimeNumbers.dat");
+	Primes.load("../../HelpPrograms/PrimeNumbers.dat");
 	
 	vector<int> Factors;
 	long tempNumber = Number;

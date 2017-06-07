@@ -9,12 +9,13 @@ using namespace std;
 using namespace arma;
 
 void printVector(ivec V);
-int maxNumber = 100;	// >= 2
+int maxNumber = 1e7;	// >= 2
 
 int main(int argc, char const* argv[]) {
 	
 	// Keeps count of the number of primes
 	int nPrimes = 0;
+	ivec PrimeNumbers;
 	// Loop runs code two times: first to calculate number of primes to 
 	// correctly allocate vector size, second to fill vector with primes
 	for (int iteration=0; iteration<2; iteration++)
@@ -22,7 +23,7 @@ int main(int argc, char const* argv[]) {
 		// Only initialize vector on second run
 		if (iteration == 1)
 		{
-			ivec PrimeNumbers(nPrimes);
+			PrimeNumbers.set_size(nPrimes+1);
 			PrimeNumbers(0) = 2; // First prime is 2
 		}
 		int index = 1;
@@ -37,23 +38,25 @@ int main(int argc, char const* argv[]) {
 				if (i%j == 0)
 				{
 					isPrime = false;
+					break;
 				}
 			}
 			if (isPrime == true)
 			{
-				PrimeNumbers(index) = i;
-				index++;
+				if (iteration == 0)
+				{
+					nPrimes++;
+				}
+				else
+				{
+					PrimeNumbers(index) = i;
+					index++;
+				}
 			}
 		}
 	}
+	
+	PrimeNumbers.save("PrimeNumbers.dat", arma_ascii);
 
 	return 0;
-}
-
-void printVector(ivec V)
-{
-	for (int i=0; i<V.n_elem; i++)
-	{
-		cout << V[i] << "\n";
-	}
 }

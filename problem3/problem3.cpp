@@ -1,50 +1,54 @@
 #include <iostream>
 #include <cmath>
+#include <vector>
 #include <armadillo>
 
 using namespace std;
 using namespace arma;
 
-void printVector(ivec V);
-int Number = 100;
+long Number = 600851475143;
 
 int main(int argc, char const* argv[]) {
-
-	ivec PrimeNumbers;
-	PrimeNumbers(0) = 2;
-	int index = 1;
-	bool isPrime;
-	for (int i=3; i<Number; i+=2)
+	
+	ivec Primes;
+	Primes.load("../HelpPrograms/PrimeNumbers.dat");
+	
+	vector<int> Factors;
+	long tempNumber = Number;
+	int i;
+	bool foundFactor;
+	
+	// Keep running track of Number, divided by already found prime factors, 
+	// until all factors are found (so tempNumber == 1)
+	while (tempNumber > 1)
 	{
-		isPrime = true;
-		for (int j=3; j<=ceil(sqrt(i)); j+=2)
+		i = 0;
+		foundFactor = false;
+		while (foundFactor == false)
 		{
-			if (i%j == 0)
+			if (tempNumber % Primes(i) == 0)
 			{
-				isPrime = false;
+				// Add new factor to Factor
+				Factors.push_back(Primes(i));
+				foundFactor = true;
+				// Divide tempNumber by newly found factor
+				tempNumber /= Primes(i);
+				break;
 			}
-		}
-		if (isPrime == true)
-		{
-			PrimeNumbers(index) = i;
-			index++;
+			i++;
 		}
 	}
 	
-	//printVector(PrimeNumbers);
-	//PrimeNumbers.print();
-	cout << PrimeNumbers.n_elem << "\n";
-	cout << PrimeNumbers.size() << "\n";
-	//cout << PrimeNumbers[0] << " " << PrimeNumbers[1] << " " << PrimeNumbers[2] << "\n";
+	ivec armaFactors(Factors);
+	armaFactors = sort(armaFactors);
+	
+	cout << armaFactors << "\n";
+	double maxFactor = max(armaFactors);
+	
+	cout << maxFactor << "\n";
 	
 	
 	return 0;
 }
 
-void printVector(ivec V)
-{
-	for (int i=0; i<V.n_elem; i++)
-	{
-		cout << V[i] << "\n";
-	}
-}
+

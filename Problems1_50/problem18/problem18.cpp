@@ -12,7 +12,11 @@ int main(int argc, char const* argv[]) {
 	// Load triangle numbers into imat
 	// -------------------------------------------------
 	int N = 15;
-	imat Triangle = zeros<imat>(N,N);
+	imat Triangle_Val = zeros<imat>(N,N);
+	imat Triangle_Sum = zeros<imat>(N,N);
+	ivec iQ = zeros<ivec>(int(N*(N+1)/2.0));
+	ivec jQ = zeros<ivec>(int(N*(N+1)/2.0));
+	
 	ifstream read_file("TriangleNumbers.dat");
 	
 	int x;
@@ -22,7 +26,7 @@ int main(int argc, char const* argv[]) {
 		{
 			if (!read_file.eof())
 			{
-				read_file >> Triangle(i,j);
+				read_file >> Triangle_Val(i,j);
 			}
 		}
 	}
@@ -31,6 +35,11 @@ int main(int argc, char const* argv[]) {
 	// -------------------------------------------------
 	// 
 	// -------------------------------------------------
+	
+	bool done = false;
+	while (done != true)
+	{
+		
 	
 	
 	

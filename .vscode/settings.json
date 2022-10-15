@@ -1,0 +1,8 @@
+{
+  "python.linting.mypyEnabled": true,
+  "python.linting.mypyArgs": [
+    "--ignore-missing-imports",
+    "--show-column-numbers",
+  ],
+  "python.linting.lintOnSave": true,
+}

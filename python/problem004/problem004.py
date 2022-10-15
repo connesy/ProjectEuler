@@ -11,8 +11,8 @@ def is_palindromic(target: str | int):
 
 if __name__ == "__main__":
 
+    values: tuple[int, int]
     largest_palindrome: int = 0
-    values: tuple[int, int] = ()
     for x in range(100, 1000):
         for y in range(x, 1000):
             product = x * y

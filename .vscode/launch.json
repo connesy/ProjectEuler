@@ -17,7 +17,7 @@
       "name": "Python: Current file as module",
       "type": "python",
       "request": "launch",
-      "module": "python.problems_001_050.${fileBasenameNoExtension}.${fileBasenameNoExtension}",
+      "module": "python.${fileBasenameNoExtension}.${fileBasenameNoExtension}",
       // "program": "${file}",
       "cwd": "${workspaceFolder}",
       "console": "integratedTerminal",

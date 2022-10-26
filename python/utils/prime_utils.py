@@ -1,6 +1,6 @@
-from collections import Counter
-import math
 import itertools
+import math
+from collections import Counter
 from typing import Iterator
 
 
@@ -9,7 +9,7 @@ def prime_generator() -> Iterator[int]:
 
     for number in itertools.count(start=3, step=2):
         is_prime = True
-        for divisor in range(2, math.ceil(math.sqrt(number)) + 1):
+        for divisor in range(3, math.ceil(math.sqrt(number)) + 1, 2):
             if number % divisor == 0:
                 is_prime = False
                 break
@@ -27,6 +27,11 @@ def first_n_primes(N: int) -> itertools.islice:
 def get_nth_prime(N: int) -> int:
     """Return the Nth prime, with the first prime being 2."""
     return next(itertools.islice(first_n_primes(N), N - 1, None))
+
+
+# Problem 010
+def primes_below(N: int) -> Iterator[int]:
+    return itertools.takewhile(lambda p: p < N, prime_generator())
 
 
 # Problem 003

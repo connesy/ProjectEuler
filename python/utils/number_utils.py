@@ -2,6 +2,7 @@
 
 import itertools
 import math
+from functools import cache
 from typing import Iterator
 
 
@@ -21,3 +22,19 @@ def factorize(number: int) -> list[int]:
 def triangle_number_generator() -> Iterator[int]:
     """Return iterator over the triangle numbers, which are the sums of consecutive natural numbers"""
     return itertools.accumulate(itertools.count(2), initial=1)
+
+
+# Problem 014
+@cache
+def collatz(start: int) -> list[int]:
+    """Run the Collatz sequence starting from `start` and ending with 1.
+
+    The sequence is generated iteratively by the rules:
+    n -> n/2 (n is even)
+    n -> 3n + 1 (n is odd)
+    """
+    if start == 1:
+        return [1]
+
+    next_num = (start // 2) if (start % 2 == 0) else (3 * start + 1)
+    return [start, *collatz(start=next_num)]

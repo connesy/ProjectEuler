@@ -18,7 +18,7 @@ def prime_generator() -> Iterator[int]:
             yield number
 
 
-def first_n_primes(N: int) -> itertools.islice:
+def first_n_primes(N: int) -> Iterator[int]:
     """Return the first N primes, with the first prime being 2."""
     return itertools.islice(prime_generator(), N)
 

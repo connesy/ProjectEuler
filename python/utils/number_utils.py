@@ -2,8 +2,9 @@
 
 import itertools
 import math
+import operator
 from functools import cache
-from typing import Iterator
+from typing import Any, Callable, Iterator
 
 
 # Problem 016
@@ -43,6 +44,29 @@ def get_proper_divisors(number: int) -> list[int]:
 def triangle_number_generator() -> Iterator[int]:
     """Return iterator over the triangle numbers, which are the sums of consecutive natural numbers"""
     return itertools.accumulate(itertools.count(2), initial=1)
+
+
+def _sum_of_divisors_iterator(op: Callable[[Any, Any], bool]) -> Iterator[int]:
+    for n in itertools.count(1):
+        if op(sum(get_proper_divisors(n)), n):
+            yield n
+
+
+def perfect_number_generator() -> Iterator[int]:
+    """Return iterator over the perfect numbers, which are numbers that are equal to the sum of their proper divisors"""
+    yield from _sum_of_divisors_iterator(op=operator.eq)
+
+
+def deficient_number_generator() -> Iterator[int]:
+    """Return iterator over the deficient numbers, which are numbers where the sum of its proper divisors is
+    less than the number"""
+    yield from _sum_of_divisors_iterator(op=operator.lt)
+
+
+def abundant_number_generator() -> Iterator[int]:
+    """Return iterator over the abundant numbers, which are numbers where the sum of its proper divisors is
+    more than the number"""
+    yield from _sum_of_divisors_iterator(op=operator.gt)
 
 
 # Problem 014

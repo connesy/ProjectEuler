@@ -6,17 +6,38 @@ from functools import cache
 from typing import Iterator
 
 
+# Problem 016
+def digit_sum(number: int) -> int:
+    """Calculate the digit sum of a number"""
+    return sum(int(d) for d in str(number))
+
+
 def factorize(number: int) -> list[int]:
     """Factorize a number into all its factors, including 1 and the number itself"""
+    # The following method only works when number > 3
+    if number <= 3:
+        return list({1, number})
+
     root = math.floor(math.sqrt(number))
 
     # Calculate all factors below the square root of number
-    low_factors = [x for x in range(1, root) if number % x == 0]
+    low_factors = [x for x in range(1, root + 1) if number % x == 0]
 
     # Calculate all factors above the square root of number as (number / x) for each x in low_factors.
     # If number is a perfect square, don't include same factor twice
     high_factors = [number // x for x in reversed(low_factors) if number // x != x]
     return low_factors + high_factors
+
+
+@cache
+def get_proper_divisors(number: int) -> list[int]:
+    """Get all proper divisors for a number (numbers less than n which divide evenly into n)"""
+    # The following method only works when number > 3
+    if number == 1:
+        return []
+
+    factors = factorize(number)
+    return factors[:-1]
 
 
 def triangle_number_generator() -> Iterator[int]:

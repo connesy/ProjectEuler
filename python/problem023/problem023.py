@@ -4,13 +4,13 @@
 """
 import itertools
 
-from python.utils.number_utils import abundant_number_generator
+from python.utils import generators
 
 MAX_LIMIT = 28123
 
 
 def numbers_as_sum_of_abundant_numbers() -> set[int]:
-    abundant_numbers = list(itertools.takewhile(lambda p: p <= MAX_LIMIT, abundant_number_generator()))
+    abundant_numbers = list(itertools.takewhile(lambda p: p <= MAX_LIMIT, generators.abundant_numbers()))
 
     sum_of_abundant_numbers = {
         x + y for i, x in enumerate(abundant_numbers) for y in abundant_numbers[i:] if y >= x and x + y <= MAX_LIMIT

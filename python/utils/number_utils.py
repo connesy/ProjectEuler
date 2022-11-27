@@ -1,10 +1,7 @@
 #!/usr/bin/env python
 
-import itertools
 import math
-import operator
 from functools import cache
-from typing import Any, Callable, Iterator
 
 
 # Problem 016
@@ -30,6 +27,7 @@ def factorize(number: int) -> list[int]:
     return low_factors + high_factors
 
 
+# Problem 021
 @cache
 def get_proper_divisors(number: int) -> list[int]:
     """Get all proper divisors for a number (numbers less than n which divide evenly into n)"""
@@ -39,34 +37,6 @@ def get_proper_divisors(number: int) -> list[int]:
 
     factors = factorize(number)
     return factors[:-1]
-
-
-def triangle_number_generator() -> Iterator[int]:
-    """Return iterator over the triangle numbers, which are the sums of consecutive natural numbers"""
-    return itertools.accumulate(itertools.count(2), initial=1)
-
-
-def _sum_of_divisors_iterator(op: Callable[[Any, Any], bool]) -> Iterator[int]:
-    for n in itertools.count(1):
-        if op(sum(get_proper_divisors(n)), n):
-            yield n
-
-
-def perfect_number_generator() -> Iterator[int]:
-    """Return iterator over the perfect numbers, which are numbers that are equal to the sum of their proper divisors"""
-    yield from _sum_of_divisors_iterator(op=operator.eq)
-
-
-def deficient_number_generator() -> Iterator[int]:
-    """Return iterator over the deficient numbers, which are numbers where the sum of its proper divisors is
-    less than the number"""
-    yield from _sum_of_divisors_iterator(op=operator.lt)
-
-
-def abundant_number_generator() -> Iterator[int]:
-    """Return iterator over the abundant numbers, which are numbers where the sum of its proper divisors is
-    more than the number"""
-    yield from _sum_of_divisors_iterator(op=operator.gt)
 
 
 # Problem 014
@@ -83,3 +53,11 @@ def collatz(start: int) -> list[int]:
 
     next_num = (start // 2) if (start % 2 == 0) else (3 * start + 1)
     return [start, *collatz(start=next_num)]
+
+
+@cache
+def nth_fibonnaci(n: int) -> int:
+    """Return the nth Fibonacci number, where the 1st and 2nd Fibonacci numbers are 1."""
+    if n in (1, 2):
+        return 1
+    return nth_fibonnaci(n - 1) + nth_fibonnaci(n - 2)

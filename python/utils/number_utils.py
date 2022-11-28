@@ -61,3 +61,41 @@ def nth_fibonnaci(n: int) -> int:
     if n in (1, 2):
         return 1
     return nth_fibonnaci(n - 1) + nth_fibonnaci(n - 2)
+
+
+def divide_with_recurring(dividend: int, divisor: int) -> tuple[str, str]:
+    """Divide the dividend by the divisor and return a tuple containing the first float part, and a string of digits
+    that constitutes the following recurring digits.
+
+    Example:
+        divide_with_recurring(1, 2) == ("0.5", "")   # == 0.5
+        divide_with_recurring(1, 3) == ("0.", "3")    # == 0.3333
+        divide_with_recurring(1, 6) == ("0.1", "6")  # == 0.1666
+    """
+
+    # Calculate the integer part first
+    original_dividend = dividend
+    integer_part, remainder = divmod(original_dividend, divisor)
+
+    digits = []
+    repeat_digits = []
+    seen_dividends = set()
+    does_repeat = False
+    while (dividend := remainder * 10) != 0:
+        quotient, remainder = divmod(dividend, divisor)
+
+        if dividend in seen_dividends:
+            does_repeat = True
+            break
+
+        seen_dividends.add(dividend)
+        digits.append(quotient)
+
+    if does_repeat:
+        first_repeat_digit = quotient
+        idx = digits.index(first_repeat_digit)
+        digits, repeat_digits = digits[:idx], digits[idx:]
+
+    float_part = f"{integer_part}.{''.join(str(d) for d in digits)}"
+    recurring_part = "".join(str(d) for d in repeat_digits)
+    return (float_part, recurring_part)

@@ -1,20 +1,31 @@
 import itertools
 import math
 from collections import Counter
+from functools import cache
 from typing import Iterator
+
+
+@cache
+def is_prime(number: int) -> bool:
+    """Check whether a number is prime or not."""
+    if number <= 0:
+        return False
+
+    if number in (1, 2):
+        return True
+
+    for divisor in range(3, math.ceil(math.sqrt(number)) + 1, 2):
+        if number % divisor == 0:
+            return False
+
+    return True
 
 
 def prime_generator() -> Iterator[int]:
     yield 2
 
     for number in itertools.count(start=3, step=2):
-        is_prime = True
-        for divisor in range(3, math.ceil(math.sqrt(number)) + 1, 2):
-            if number % divisor == 0:
-                is_prime = False
-                break
-
-        if is_prime:
+        if is_prime(number):
             yield number
 
 
@@ -24,13 +35,14 @@ def first_n_primes(N: int) -> Iterator[int]:
 
 
 # Problem 007
-def get_nth_prime(N: int) -> int:
-    """Return the Nth prime, with the first prime being 2."""
-    return next(itertools.islice(first_n_primes(N), N - 1, None))
+def get_nth_prime(n: int) -> int:
+    """Return the nth prime, with the first prime being 2."""
+    return next(itertools.islice(first_n_primes(n), n - 1, None))
 
 
 # Problem 010
 def primes_below(N: int) -> Iterator[int]:
+    """Iterator over the primes p < N."""
     return itertools.takewhile(lambda p: p < N, prime_generator())
 
 

@@ -99,3 +99,11 @@ def divide_with_recurring(dividend: int, divisor: int) -> tuple[str, str]:
     float_part = f"{integer_part}.{''.join(str(d) for d in digits)}"
     recurring_part = "".join(str(d) for d in repeat_digits)
     return (float_part, recurring_part)
+
+
+# Problem 035
+def digit_rotations(number: int) -> set[int]:
+    """Return all rotations of the digits in number."""
+
+    number_str = str(number)
+    return {int(number_str[mid:] + number_str[:mid]) for mid, _ in enumerate(number_str)}

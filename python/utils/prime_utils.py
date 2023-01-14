@@ -8,11 +8,14 @@ from typing import Iterator
 @cache
 def is_prime(number: int) -> bool:
     """Check whether a number is prime or not."""
-    if number <= 0:
+    if number <= 1:
         return False
 
-    if number in (1, 2):
+    if number == 2:
         return True
+
+    if number % 2 == 0:
+        return False
 
     for divisor in range(3, math.ceil(math.sqrt(number)) + 1, 2):
         if number % divisor == 0:

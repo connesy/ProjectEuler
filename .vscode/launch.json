@@ -22,6 +22,19 @@
       "cwd": "${workspaceFolder}",
       "console": "integratedTerminal",
       "justMyCode": true
-    }
+    },
+    {
+      "name": "Pytest: Current file",
+      "type": "python",
+      "request": "launch",
+      "console": "integratedTerminal",
+      "cwd": "${workspaceFolder}",
+      "module": "pytest",
+      "args": [
+        "${fileDirname}/test_${fileBasename}",
+      ],
+      "justMyCode": false,
+      "purpose": ["debug-test"],
+    },
   ]
 }

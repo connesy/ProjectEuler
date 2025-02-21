@@ -39,6 +39,26 @@ def get_proper_divisors(number: int) -> list[int]:
     return factors[:-1]
 
 
+@cache
+def greatest_common_divisor(a: int, b: int, /) -> int:
+    """Calculate the greatest common divisor of two integers."""
+    if a < 0 or b < 0:
+        raise ValueError("Both numbers must be positive.")
+
+    if a == 0:
+        return b
+
+    if b == 0:
+        return a
+
+    if a < b:
+        a, b = b, a
+    while b != 0:
+        a, b = b, a % b
+
+    return a
+
+
 # Problem 014
 @cache
 def collatz(start: int) -> list[int]:

@@ -51,14 +51,18 @@ def primes_below(N: int) -> Iterator[int]:
 
 # Problem 003
 def _prime_factorize(target: int) -> list[int]:
-    if target == 1:
-        return []
+    """Calculate the prime factorization of an integer."""
+    factors = []
 
     for prime in prime_generator():
-        if target % prime == 0:
-            return [prime, *prime_factorize(target=target // prime)]
+        if prime > target:
+            break
 
-    return [target]
+        while target % prime == 0:
+            target //= prime
+            factors.append(prime)
+
+    return factors
 
 
 def prime_factorize(target: int, as_dict: bool = False) -> list[int] | dict[int, int]:
